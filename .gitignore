@@ -2,3 +2,5 @@
 benchmarks/
 device/
 
+# VSCode settings
+.vscode/
