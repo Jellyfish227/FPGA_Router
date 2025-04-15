@@ -57,7 +57,6 @@ echo
 echo "******************************************************"
 echo "Downloading benchmarks & device files..."
 echo "******************************************************"
-echo
 
 download_and_extract "https://github.com/ippan-kaishain/CENG4120-2025-Final/releases/download/Released/benchmarks.tar.bz2" "benchmarks.tar.bz2" "."
 download_and_extract "https://github.com/ippan-kaishain/CENG4120-2025-Final/releases/download/Released/xcvu3p.tar.bz2" "xcvu3p.tar.bz2" "device"
