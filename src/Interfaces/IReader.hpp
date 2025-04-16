@@ -41,7 +41,7 @@ public:
      * Returns last error message if any parsing operation fails
      * @return Error message or empty string if no error
      */
-    virtual std::string getLastError() const = 0;
+    // virtual std::string getLastError() const = 0;
 };
 
 #endif // IREADER_HPP
