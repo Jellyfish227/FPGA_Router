@@ -4,31 +4,25 @@
 #ifndef IREADER_HPP
 #define IREADER_HPP
 
-#include <string>
-#include <vector>
-#include <memory>
-
-class Circuit;
-class Net;
-class Block;
+#include "../DataType.hpp"
 
 class IReader {
 public:
     virtual ~IReader() = default;
     
     /**
-     * Reads circuit data from the specified file path
+     * Reads device info from the specified file path
      * @param filePath Path to the input file
-     * @return Pointer to parsed circuit data or nullptr if parsing fails
+     * @return Pair of parsed node info and adjacency list
      */
-    virtual std::shared_ptr<Circuit> readDevice(const std::string& filePath) = 0; // TODO: incase of performance issue, change it back to normal pointer
+    virtual DeviceGraph readDevice(const std::string& filePath) = 0; 
     
     /**
      * Reads net list from the specified file
      * @param filePath Path to the netlist file
      * @return Vector of parsed nets or empty vector if parsing fails
      */
-    virtual std::vector<std::shared_ptr<Net>> readNetlist(const std::string& filePath) = 0;
+    // virtual std::vector<std::shared_ptr<Net>> readNetlist(const std::string& filePath) = 0;
     
     /**
      * Reads block/component specifications from the specified file

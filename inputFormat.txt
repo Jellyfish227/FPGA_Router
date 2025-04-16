@@ -1,0 +1,6 @@
+n
+<node ID> <node type> <node length> <begin x coordinate> <begin y coordinate> <end x coordinate> <end y coordinate> <node name>
+.
+n lines
+.
+<Parent Node ID> <Child Node ID 0> [<Child Node ID 1> [<Child Node ID 2> ...]]

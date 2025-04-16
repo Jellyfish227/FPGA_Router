@@ -1,0 +1,18 @@
+<net ID> <net name>
+<Parent node1 ID> <Child node1 ID>
+<Parent node2 ID> <Child node2 ID>
+…
+<Parent node i ID> <Child node i ID>
+
+<net ID> <net name>
+<Parent node1 ID> <Child node1 ID>
+<Parent node2 ID> <Child node2 ID>
+…
+<Parent node i ID> <Child node i ID>
+…
+
+<net ID> <net name>
+<Parent node1 ID> <Child node1 ID>
+<Parent node2 ID> <Child node2 ID>
+…
+<Parent node i ID> <Child node i ID>

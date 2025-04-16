@@ -4,14 +4,7 @@
 #ifndef IROUTER_HPP
 #define IROUTER_HPP
 
-#include <memory>
-#include <string>
-#include <vector>
-
-class Circuit;
-class Net;
-class RoutingResult;
-struct RouterConfig;
+#include "../DataType.hpp"
 
 class IRouter {
 public:
@@ -22,32 +15,39 @@ public:
      * @param config Router configuration parameters
      * @return true if initialization succeeds, false otherwise
      */
-    virtual bool initialize(const RouterConfig& config) = 0;
+    // virtual bool initialize(const RouterConfig& config) = 0;
     
     /**
      * Routes the entire circuit
-     * @param circuit Circuit to be routed
-     * @return Routing result containing the complete solution or error information
+     * @param device Pair containing the device nodes and adjacency list
+     * @param netlist The netlist to be routed
+     * @return Vector of routed nets
      */
-    virtual RoutingResult routeCircuit(const std::shared_ptr<Circuit>& circuit) = 0;
+    virtual std::vector<RoutedNet> route(const DeviceGraph &device, 
+                                            const std::vector<Net> &netlist) = 0;
     
-    /**
-     * Routes a specific net within the circuit
-     * @param circuit Circuit containing the net
-     * @param net Net to be routed
+    /** DISABLED, can be done by routeNets by only passing one net in the routeList
+     * Routes a specific net within the device
+     * @param device Pair containing the device nodes and adjacency list
+     * @param net The specific net to be routed
+     * @param results Vector to be updated with routing results
      * @return true if routing succeeds, false otherwise
      */
-    virtual bool routeNet(const std::shared_ptr<Circuit>& circuit, const std::shared_ptr<Net>& net) = 0;
-    
+    // virtual bool routeSingleNet(const std::pair<std::vector<Node>, AdjacencyList> &device, 
+    //                            const Net &net, 
+    //                            std::vector<RoutedNet> &results) = 0;
+
     /**
-     * Routes a subset of nets within the circuit
-     * @param circuit Circuit containing the nets
+     * Routes a subset of nets within the device, probably use for Rerouting or Partial Routing
+     * @param device Pair containing the device nodes and adjacency list
      * @param nets Collection of nets to be routed
-     * @return Number of successfully routed nets
+     * @param results Vector to be updated with routing results
+     * @return true if routing succeeds, false otherwise
      */
-    virtual int routeNets(const std::shared_ptr<Circuit>& circuit, 
-                            const std::vector<std::shared_ptr<Net>>& nets) = 0;
-    
+    virtual bool routeNets(const DeviceGraph &device, 
+                            const std::vector<Net> &nets, const std::vector<int> &routeList, 
+                            std::vector<RoutedNet> &results) = 0;
+
     /**
      * Returns last error message if any routing operation fails
      * @return Error message or empty string if no error

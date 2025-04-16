@@ -4,11 +4,7 @@
 #ifndef IEXPORTER_HPP
 #define IEXPORTER_HPP
 
-#include <string>
-#include <memory>
-
-class Circuit;
-class RoutingResult;
+#include "../DataType.hpp"
 
 class IExporter {
 public:
@@ -16,10 +12,10 @@ public:
     
     /**
      * Exports the complete routing solution to the specified file
-     * @param result The routing result to be exported
+     * @param results The vector of routing results to be exported
      * @return true if export succeeds, false otherwise
      */
-    virtual bool exportRoutingResult(const RoutingResult& result) = 0;
+    virtual bool exportRoutingResult(const std::vector<RoutedNet>& results) = 0;
     
     /**
      * Returns last error message if any export operation fails
