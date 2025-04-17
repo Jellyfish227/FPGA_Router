@@ -1,3 +1,11 @@
+/*
+ * FPGARouter - FPGA Routing Algorithm Implementation
+ * 
+ * This work is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+ * International License (CC BY-NC-ND 4.0). To view a copy of this license, visit:
+ * https://creativecommons.org/licenses/by-nc-nd/4.0/
+ */
+
 /* 
  * Interface class for data reader
  */
@@ -22,7 +30,7 @@ public:
      * @param filePath Path to the netlist file
      * @return Vector of parsed nets or empty vector if parsing fails
      */
-    // virtual std::vector<std::shared_ptr<Net>> readNetlist(const std::string& filePath) = 0;
+    virtual std::vector<Net> readNetlist(const std::string& filePath) = 0;
     
     /**
      * Reads block/component specifications from the specified file

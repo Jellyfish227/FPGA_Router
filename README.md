@@ -1,8 +1,17 @@
 # FPGA Router Project
 
-## Overview
-
 This project is a associated project for the course CENG4120 - VLSI CAD @ CUHK CSE. 
+
+## License
+
+This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND 4.0). This means:
+
+- ✅ You may share this work with proper attribution
+- ❌ You may not use this work for commercial purposes
+- ❌ You may not distribute modified versions of this work
+- ❌ You may not incorporate this work into projects with incompatible licenses
+
+For more details, see the [LICENSE](LICENSE) file or visit [creativecommons.org/licenses/by-nc-nd/4.0/](https://creativecommons.org/licenses/by-nc-nd/4.0/).
 
 ## Project Specification
 
