@@ -31,3 +31,66 @@ link to the project specification: [Project Specification](https://docs.google.c
 chmod +x setup.sh
 ./setup.sh
 ```
+
+## Requirements
+
+- CMake 3.10+
+- C++17 Compiler
+- Boost Library
+- OpenMP
+
+### Download Boost Library
+
+# macOS (using Homebrew)
+```bash
+brew install boost
+```
+
+# Linux (Ubuntu/Debian)
+```bash
+sudo apt-get install libboost-all-dev
+```
+
+# Linux (Fedora/RHEL)
+```bash
+sudo dnf install boost-devel
+```
+
+### OpenMP
+# macOS (using Homebrew)
+```bash
+brew install libomp 
+```
+
+# Linux (Ubuntu/Debian)
+```bash
+sudo apt-get install libomp-dev
+```
+
+# Linux (Fedora/RHEL)
+```bash
+sudo dnf install libomp-devel
+
+```
+
+## CMake Configuration
+
+Add to your CMakeLists.txt:
+
+```cmake
+# Find required packages
+find_package(Boost REQUIRED COMPONENTS iostreams)
+find_package(OpenMP REQUIRED)
+
+# Add include directories
+include_directories(${Boost_INCLUDE_DIRS})
+
+# Add compiler flags for OpenMP
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+
+# Link libraries
+target_link_libraries(YourTarget PRIVATE 
+    ${Boost_LIBRARIES}
+    OpenMP::OpenMP_CXX
+)
+```
