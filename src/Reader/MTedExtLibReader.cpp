@@ -6,6 +6,12 @@
  * https://creativecommons.org/licenses/by-nc-nd/4.0/
  */
 
+/* 
+ * Test result:
+ * MyMac -O0: 77.0965s
+ * MyMac -O3: 25.8676s
+ */
+
 #define IMPLEMENTED true
 
 #if IMPLEMENTED

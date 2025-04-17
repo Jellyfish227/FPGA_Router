@@ -69,30 +69,34 @@ set(MAIN "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
 # Interface files
 file(GLOB_RECURSE INTERFACES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Interfaces/*.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Interfaces/*.h"
 )
 
 # Reader files
 file(GLOB_RECURSE READERS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Reader/*.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/Reader/*.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/Reader/*.h"
 )
 
-# # Router files
-# file(GLOB_RECURSE ROUTERS
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/Router/*.hpp"
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/Router/*.h"
-# )
+# Router files
+file(GLOB_RECURSE ROUTERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Router/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Router/*.hpp"
+)
 
-# # Exporter files
-# file(GLOB_RECURSE EXPORTERS
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/Exporter/*.hpp"
-#     "${CMAKE_CURRENT_SOURCE_DIR}/src/Exporter/*.h"
-# )
+# Exporter files
+file(GLOB_RECURSE EXPORTERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Exporter/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/Exporter/*.hpp"
+)
 
 # Create executable
-add_executable(${PROJECT_NAME} ${MAIN} ${INTERFACES} ${READERS})
+add_executable(${PROJECT_NAME} 
+    ${MAIN} 
+    ${INTERFACES} 
+    ${READERS} 
+    ${ROUTERS} 
+    ${EXPORTERS}
+)
 
 # Line external lib begin
 # Link libraries
