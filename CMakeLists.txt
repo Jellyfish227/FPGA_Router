@@ -6,6 +6,23 @@ project(FPGA_Router)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Custom Build Variant
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug;Release;RelWithDebInfo;MinSizeRel;TADebug")
+
+# Compilation flags
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
+set(CMAKE_CXX_FLAGS_TADEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Ofast")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2")
+
+if (CMAKE_BUILD_TYPE STREQUAL "TADEBUG")
+    message(STATUS "Building in Time Attack DEBUG mode")
+elseif (CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+    message(STATUS "Building in Vanilla DEBUG mode")
+elseif (CMAKE_BUILD_TYPE STREQUAL "RELEASE")
+    message(STATUS "Building in RELEASE mode")
+endif ()
+
 # Include directories
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -40,18 +57,12 @@ file(GLOB_RECURSE READERS
 # )
 
 # Create executable
-add_executable(fpga_router ${MAIN} ${INTERFACES} ${READERS})
+add_executable(${PROJECT_NAME} ${MAIN} ${INTERFACES} ${READERS})
 
 # Set output directory
-set_target_properties(fpga_router PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
-
-# Optionally, specify which folders are included in the build
-# target_include_directories(fpga_router PRIVATE
-#     ${CMAKE_CURRENT_SOURCE_DIR}/src
-#     ${CMAKE_CURRENT_SOURCE_DIR}/src/Interfaces
-# )
 
 # project(FPGARouter2)
 # add_executable(${PROJECT_NAME} src/main2.cpp)

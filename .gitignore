@@ -2,6 +2,8 @@
 benchmarks/
 device/
 
+# MacOS
+.DS_Store
 # VSCode settings
 .vscode/
 

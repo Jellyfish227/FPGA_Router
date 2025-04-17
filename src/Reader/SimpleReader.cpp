@@ -8,14 +8,14 @@
 
 /* 
  * Test result:
- * MyMac: 172.126s
+ * MyMac -O0: 174.743s
+ * MyMac -O3: 66.3389s
  */
 
 #include "SimpleReader.hpp"
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <map>
 #include <unordered_map>
 
 using namespace std;
