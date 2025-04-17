@@ -91,18 +91,16 @@ DeviceGraph SimpleReader::readDevice(const string& filePath)
             cerr << "Warning: Unknown node type '" << nodeTypeStr << "' for node " << id << endl;
         }
         
-        // Create node
-        Node node;
-        node.id = id;
-        node.type = type;
-        node.length = length;
-        node.begin = {beginX, beginY};
-        node.end = {endX, endY};
-        node.name = name;
-        node.adjacency = nullptr; // Will be set later
-        
         // Store node
-        nodes[id] = node;
+        nodes[id] = Node{
+            id,
+            type,
+            length,
+            {beginX, beginY},
+            {endX, endY},
+            std::move(name), 
+            nullptr // adjacency set later
+        };
     }
     
     // Read adjacency information

@@ -85,18 +85,19 @@ DeviceGraph MTedExtLibReader::readDevice(const string &filePath)
                 {"NODE_SINGLE", NodeType::NODE_SINGLE},
                 {"NODE_VLONG", NodeType::NODE_VLONG},
                 {"NODE_VQUAD", NodeType::NODE_VQUAD},
-                {"NONE", NodeType::NONE}};
+                {"NONE", NodeType::NONE}
+            };
 
-            Node node;
-            node.id = stoi(tokens[0]);
+            int id = stoi(tokens[0]);
             auto typeIt = typeMap.find(tokens[1]);
-            node.type = (typeIt != typeMap.end()) ? typeIt->second : NodeType::NONE;
-            node.length = stoi(tokens[2]);
-            node.begin = {stoi(tokens[3]), stoi(tokens[4])};
-            node.end = {stoi(tokens[5]), stoi(tokens[6])};
-            node.name = tokens[7];
-
-            nodes[node.id] = node;
+            nodes[id] = Node{
+                id,
+                (typeIt != typeMap.end()) ? typeIt->second : NodeType::NONE,
+                stoi(tokens[2]),
+                {stoi(tokens[3]), stoi(tokens[4])},
+                {stoi(tokens[5]), stoi(tokens[6])},
+                tokens[7],
+                nullptr};
         }
 
         // Process adjacency lines in parallel with thread-local storage
@@ -179,7 +180,7 @@ vector<Net> MTedExtLibReader::readNetlist(const string &filePath)
         if (linePtrs.size() < netEnd)
             return nets;
 
-#pragma omp parallel for num_threads(MAX_THREADS)
+        #pragma omp parallel for num_threads(MAX_THREADS)
         for (size_t i = netStart; i < netEnd; ++i)
         {
             const char *lineStart = linePtrs[i];
