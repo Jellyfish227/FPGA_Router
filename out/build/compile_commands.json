@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/jellyfish/Documents/Year_3/Spring/FPGA_Router/out/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -o CMakeFiles/FPGARouter.dir/src/main.cpp.o -c /Users/jellyfish/Documents/Year_3/Spring/FPGA_Router/src/main.cpp",
+  "file": "/Users/jellyfish/Documents/Year_3/Spring/FPGA_Router/src/main.cpp",
+  "output": "CMakeFiles/FPGARouter.dir/src/main.cpp.o"
+}
+]
