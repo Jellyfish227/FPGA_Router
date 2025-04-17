@@ -18,9 +18,18 @@
 // It's just node type, what do you expect?
 enum class NodeType
 {
+    INTENT_DEFAULT,
+    NODE_CLE_OUTPUT,
+    NODE_DOUBLE,
+    NODE_HLONG,
+    NODE_HQUAD,
     NODE_INT_INTERFACE,
+    NODE_LOCAL,
     NODE_PINBOUNCE,
     NODE_PINFEED,
+    NODE_SINGLE,
+    NODE_VLONG,
+    NODE_VQUAD, 
     NONE
 };
 
