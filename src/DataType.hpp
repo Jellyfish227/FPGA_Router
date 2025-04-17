@@ -12,7 +12,8 @@ enum class NodeType
 {
     NODE_INT_INTERFACE,
     NODE_PINBOUNCE,
-    NODE_PINFEED
+    NODE_PINFEED,
+    NONE
 };
 
 struct Coordinate
