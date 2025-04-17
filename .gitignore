@@ -4,3 +4,6 @@ device/
 
 # VSCode settings
 .vscode/
+
+# Visual Studio settings
+.vs/
