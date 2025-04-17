@@ -1,0 +1,44 @@
+FPGA_Router/
+├── .git/                 # Git repository
+├── .gitignore            # Git ignore file
+├── .vs/                  # Visual Studio settings
+├── .vscode/              # VSCode settings
+├── CMakeLists.txt        # CMake build configuration
+├── IRouter.cpp           # Router implementation
+├── PROJECT_STRUCTURE.txt # This file
+├── README.md             # Project documentation
+├── benchmarks/           # Benchmark netlist files
+│   ├── design1.netlist
+│   ├── design2.netlist
+│   ├── design3.netlist
+│   ├── design4.netlist
+│   └── design5.netlist
+├── device/               # FPGA device descriptions
+│   └── xcvu3p.device
+├── eval                  # Evaluation binary
+├── IOFormat/             # Input/Output format specifications
+│   ├── deviceFormat.txt
+│   ├── netlistFormat.txt
+│   └── outputFormat.txt
+├── out/                  # Build output directory
+├── setup.sh              # Setup script
+└── src/                  # Source code
+    ├── DataType.hpp      # Data type definitions
+    ├── Exporter/         # Exporter Implementation classes
+    │   ├── SimpleExporter.cpp
+    │   └── SimpleExporter.hpp
+    ├── Interfaces/       # Interface definitions
+    │   ├── IExporter.hpp   # Exporter Interface
+    │   ├── IReader.hpp     # Reader Interface
+    │   └── IRouter.hpp     # Router Interface
+    ├── Reader/           # Reader Implementation classes
+    │   ├── MTedReader.cpp      # Multi-threaded Reader
+    │   ├── MTedReader.hpp
+    │   ├── SimpleReader.cpp    # Simple Reader
+    │   └── SimpleReader.hpp
+    ├── Router/           # Router Implementation classes
+    │   ├── NoViolationRouter.cpp   # No Violation Router
+    │   ├── NoViolationRouter.h
+    │   ├── RRRRouter.cpp           # Rip-up and Re-Route Router
+    │   └── RRRRouter.h
+    └── main.cpp          # Application entry point
