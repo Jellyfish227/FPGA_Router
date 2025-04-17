@@ -1,0 +1,2 @@
+m
+<net ID> <net name> <source node ID> [<sink node ID 0> [<sink node ID 1> ...]]

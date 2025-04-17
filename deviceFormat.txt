@@ -1,4 +1,4 @@
-n
+n (n is 1 based, nodeID is 0 based)
 <node ID> <node type> <node length> <begin x coordinate> <begin y coordinate> <end x coordinate> <end y coordinate> <node name>
 .
 n lines
