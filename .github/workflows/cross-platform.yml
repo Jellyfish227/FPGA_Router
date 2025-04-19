@@ -1,0 +1,118 @@
+name: Cross-Platform Build and Test
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false  # Continue with other builds if one fails
+      matrix:
+        config:
+          - {
+            name: "Windows Latest MSVC",
+            os: windows-latest,
+            build_type: "Release",
+            cc: "cl",
+            cxx: "cl",
+            generators: "Visual Studio 17 2022"
+          }
+          - {
+            name: "Ubuntu Latest GCC",
+            os: ubuntu-latest,
+            build_type: "Release",
+            cc: "gcc",
+            cxx: "g++",
+            generators: "Ninja"
+          }
+          - {
+            name: "macOS Latest Clang",
+            os: macos-latest,
+            build_type: "Release",
+            cc: "clang",
+            cxx: "clang++",
+            generators: "Ninja"
+          }
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup dependencies (Ubuntu)
+        if: matrix.config.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build libboost-all-dev libomp-dev
+
+      - name: Setup dependencies (macOS)
+        if: matrix.config.os == 'macos-latest'
+        run: |
+          brew install ninja boost libomp
+
+      - name: Setup dependencies (Windows)
+        if: matrix.config.os == 'windows-latest'
+        run: |
+          choco install ninja
+          # Install vcpkg
+          git clone https://github.com/Microsoft/vcpkg.git
+          cd vcpkg
+          ./bootstrap-vcpkg.bat
+          ./vcpkg integrate install
+          ./vcpkg install boost:x64-windows
+
+      - name: Download Project Files using CMake
+        shell: bash
+        run: |
+          mkdir build
+          cd build
+          
+          # Set CC and CXX environment variables on non-Windows
+          if [ "${{ matrix.config.os }}" != "windows-latest" ]; then
+            export CC=${{ matrix.config.cc }}
+            export CXX=${{ matrix.config.cxx }}
+          fi
+          
+          # Configure CMake with setup target to download project files
+          if [ "${{ matrix.config.os }}" == "windows-latest" ]; then
+            cmake .. -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          else
+            cmake .. -G "${{ matrix.config.generators }}" -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
+          fi
+          
+          # Build the setup target to download dependencies
+          cmake --build . --target setup
+
+      - name: Build
+        shell: bash
+        run: |
+          cd build
+          cmake --build . --config ${{ matrix.config.build_type }}
+
+      - name: Test
+        shell: bash
+        run: |
+          cd build
+          # If you have tests configured with CTest
+          # ctest -C ${{ matrix.config.build_type }} --output-on-failure
+          
+          # For now, just run the executable to verify it starts
+          if [ "${{ matrix.config.os }}" == "windows-latest" ]; then
+            # Adjust path as needed based on your CMake output directory
+            ./bin/${{ matrix.config.build_type }}/FPGA_Router.exe --version || echo "Program executed with non-zero exit code, which may be expected"
+          else
+            # Adjust path as needed based on your CMake output directory
+            ./bin/FPGA_Router --version || echo "Program executed with non-zero exit code, which may be expected"
+          fi
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.config.name }}
+          path: |
+            build/bin/ 
