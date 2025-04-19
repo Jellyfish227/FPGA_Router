@@ -26,11 +26,12 @@
 #include "DataType.hpp"
 
 using namespace std;
-const string DEVICE_PATH = "device/xcvu3p.device";
-const string NETLIST_PATH = "benchmarks/design5.netlist";
+namespace fs = std::filesystem;
+const fs::path devicePath = fs::current_path() / "device" / "xcvu3p.device";
+const fs::path netlistPath = fs::current_path() / "benchmarks" / "design5.netlist";
 
 int main() {
-    cout << "Current working directory: " << filesystem::current_path() << endl;
+    cout << "Current working directory: " << fs::current_path() << endl;
     cout << "FPGA Router Starting..." << endl;
 
     try {
@@ -39,8 +40,8 @@ int main() {
         IExporter *exporter = new SimpleExporter("routing_result.txt");
         
         auto start = chrono::high_resolution_clock::now();
-        DeviceGraph deviceGraph = reader->readDevice(DEVICE_PATH);
-        vector<Net> netlist = reader->readNetlist(NETLIST_PATH);
+        DeviceGraph deviceGraph = reader->readDevice(devicePath);
+        vector<Net> netlist = reader->readNetlist(netlistPath);
         auto end = chrono::high_resolution_clock::now();
         chrono::duration<double> elapsed = end - start;
         cout << "Device and Netlist loading time: " << elapsed.count() << " seconds" << endl;
