@@ -10,8 +10,8 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include <memory>
 #include <chrono>  // For timing
+#include <filesystem> // For getting current path
 
 // Interfaces
 #include "Interfaces/IReader.hpp"
@@ -19,41 +19,34 @@
 #include "Interfaces/IExporter.hpp"
 
 // Implementations
-#include "Reader/SimpleReader.hpp"
-// #include "Router/SimpleRouter.hpp"
-// #include "Exporter/SimpleExporter.hpp"
+#include "Reader/Readers.hpp"
+#include "Router/Routers.hpp"
+#include "Exporter/Exporters.hpp"
 
 #include "DataType.hpp"
 
 using namespace std;
-// Forward declaration
-// class Router;
 const string DEVICE_PATH = "device/xcvu3p.device";
-const string NETLIST_PATH = "benchmarks/design1.netlist";
+const string NETLIST_PATH = "benchmarks/design5.netlist";
 
 int main() {
-    std::cout << "FPGA Router Starting..." << std::endl;
+    cout << "Current working directory: " << filesystem::current_path() << endl;
+    cout << "FPGA Router Starting..." << endl;
 
     try {
-        // Create reader instance
-        IReader *reader = new SimpleReader();
-        // unique_ptr<IRouter> router = make_unique<TONYRouter>();
-        // unique_ptr<IExporter> exporter = make_unique<SimpleExporter>();
+        IReader *reader = new MTedExtLibReader();
+        IRouter *router = new STRRRRouter();
+        IExporter *exporter = new SimpleExporter("routing_result.txt");
         
-        auto start = std::chrono::high_resolution_clock::now();
+        auto start = chrono::high_resolution_clock::now();
         DeviceGraph deviceGraph = reader->readDevice(DEVICE_PATH);
         vector<Net> netlist = reader->readNetlist(NETLIST_PATH);
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
+        auto end = chrono::high_resolution_clock::now();
+        chrono::duration<double> elapsed = end - start;
         cout << "Device and Netlist loading time: " << elapsed.count() << " seconds" << endl;
 
-        // Create and use router when implemented
-        // std::unique_ptr<IRouter> router = std::make_unique<RRRRouter>();
-        // std::vector<RoutedNet> routedNets = router->route(
-        //     std::make_pair(deviceGraph.nodes, deviceGraph.adjList), netlist);
-        
-        // Create and use exporter when implemented
-        // std::unique_ptr<IExporter> exporter = std::make_unique<SimpleExporter>();
+        // vector<RoutedNet> routedNets = router->route(deviceGraph, netlist);
+
         // exporter->exportRoutingResult(routedNets);
         
     } catch (const std::exception& e) {
