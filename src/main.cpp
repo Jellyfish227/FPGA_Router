@@ -36,7 +36,7 @@ int main() {
 
     try {
         IReader *reader = new MTedExtLibReader();
-        IRouter *router = new STRRRRouter();
+        // IRouter *router = new STRRRRouter();
         IExporter *exporter = new SimpleExporter("routing_result.txt");
         
         auto start = chrono::high_resolution_clock::now();
