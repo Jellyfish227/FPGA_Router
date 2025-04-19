@@ -15,14 +15,14 @@ jobs:
       fail-fast: false  # Continue with other builds if one fails
       matrix:
         config:
-          - {
-            name: "Windows Latest MSVC",
-            os: windows-latest,
-            build_type: "Release",
-            cc: "cl",
-            cxx: "cl",
-            generators: "Visual Studio 17 2022"
-          }
+          # - {
+          #   name: "Windows Latest MSVC",
+          #   os: windows-latest,
+          #   build_type: "Release",
+          #   cc: "cl",
+          #   cxx: "cl",
+          #   generators: "Visual Studio 17 2022"
+          # }
           - {
             name: "Ubuntu Latest GCC",
             os: ubuntu-latest,
@@ -55,16 +55,16 @@ jobs:
         run: |
           brew install ninja boost libomp
 
-      - name: Setup dependencies (Windows)
-        if: matrix.config.os == 'windows-latest'
-        run: |
-          choco install ninja
-          # Install vcpkg
-          git clone https://github.com/Microsoft/vcpkg.git
-          cd vcpkg
-          ./bootstrap-vcpkg.bat
-          ./vcpkg integrate install
-          ./vcpkg install boost:x64-windows
+      # - name: Setup dependencies (Windows)
+      #   if: matrix.config.os == 'windows-latest'
+      #   run: |
+      #     choco install ninja
+      #     # Install vcpkg
+      #     git clone https://github.com/Microsoft/vcpkg.git
+      #     cd vcpkg
+      #     ./bootstrap-vcpkg.bat
+      #     ./vcpkg integrate install
+      #     ./vcpkg install boost:x64-windows
 
       - name: Download Project Files using CMake
         shell: bash

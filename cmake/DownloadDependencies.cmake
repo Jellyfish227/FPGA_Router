@@ -43,5 +43,40 @@ if(UNIX)
   )
 endif()
 
-# Create setup target that depends on these downloads
-add_custom_target(setup DEPENDS benchmarks device_files eval_tool) 
+# Create explicit custom targets for each download with stamp files as evidence of completion
+FetchContent_GetProperties(benchmarks)
+if(benchmarks_POPULATED)
+  add_custom_target(download_benchmarks 
+    DEPENDS ${benchmarks_SOURCE_DIR}
+    COMMENT "Ensure benchmarks are downloaded"
+  )
+endif()
+
+FetchContent_GetProperties(device_files)
+if(device_files_POPULATED)
+  add_custom_target(download_device_files
+    DEPENDS ${device_files_SOURCE_DIR}
+    COMMENT "Ensure device files are downloaded"
+  )
+endif()
+
+FetchContent_GetProperties(eval_tool)
+if(eval_tool_POPULATED)
+  if(WIN32)
+    add_custom_target(download_eval_tool
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/eval.exe
+      COMMENT "Ensure evaluation tool is downloaded"
+    )
+  else()
+    add_custom_target(download_eval_tool
+      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/eval
+      COMMENT "Ensure evaluation tool is downloaded"
+    )
+  endif()
+endif()
+
+# Create setup target that depends on these download targets
+add_custom_target(setup 
+  DEPENDS download_benchmarks download_device_files download_eval_tool
+  COMMENT "Setup completed - all dependencies downloaded"
+) 
